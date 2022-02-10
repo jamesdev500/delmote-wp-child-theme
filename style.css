@@ -1,0 +1,85 @@
+/*!
+Theme Name: Hello Elementor Child
+Theme URI: https://crocoblock.com/
+Author: Crocoblock
+Author URI: https://crocoblock.com/
+Description: Child theme for Hello Elementor with all CrocoBlock features compatibility.
+Template: hello-elementor
+Version: 1.0.0
+License: GNU General Public License v3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: hello-elementor-child
+*/
+
+body,
+html {
+	overflow-x: hidden;
+	margin: 0;
+}
+
+/*.fluid-right, .fluid-left{
+ 	max-width: 1440px;
+	margin-right: auto;
+	margin-left: auto; 
+}*/
+
+.fluid-right > div, .fluid-left > div{
+	width: 100%!important;
+}
+
+@media (min-width:768px){
+	.fluid-right > div{
+		margin-right: 0 !important;
+		margin-left: calc(50vw - 371.5px) !important;
+	}
+}
+
+@media (min-width:992px){
+	.fluid-right > div{
+		margin-right: 0 !important;
+		margin-left: calc(50vw - 500px) !important;
+	}
+}
+
+@media (min-width:1200px){
+	.fluid-right > div{
+		margin-right: 0 !important;
+		margin-left: calc(50vw - 565px) !important;
+	}
+}
+
+@media (min-width:768px){
+	.fluid-left > div{
+		margin-left: 0 !important;
+		margin-right: calc(50vw - 371.5px) !important;
+	}
+}
+
+@media (min-width:992px){
+	.fluid-left > div{
+		margin-left: 0 !important;
+		margin-right: calc(50vw - 500px) !important;
+	}
+}
+
+@media (min-width:1200px){
+	.fluid-left > div{
+		margin-left: 0 !important;
+		margin-right: calc(50vw - 565px) !important;
+	}
+}
+
+
+* {
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+*:focus {
+	outline: none !important;
+}
