@@ -529,29 +529,41 @@ jQuery(document).ready(function($) {
 		enableScroll();
 	});
 	
+    // Show added files on Job Application Form /careers/job-application-form/
+    const filesField = $('.elementor-widget-form.elementor-element-1f7abcb form #form-field-attachments');
+    let fileList = '';
+    $(filesField).change(function() {
+        for (var i = 0; i < this.files.length; i++) {
+            fileList += '<i>' + this.files[i].name + '</i><br/>';
+        }
+        $(this).prev('label').html('Attachments: <br/>' + fileList);
+    });
 
-	// Category page dropdown filter fix
-	var catDropDownFilter = $('.jet-smart-filters-select .jet-select__control[name="category"]');
+});
 
-	// $(catDropDownFilter).find('option').click(function (e) { 
-	// 	e.preventDefault();
-	// });
 
-	$(catDropDownFilter).find('option').unbind();
-	$(catDropDownFilter).unbind();
-
-	$(catDropDownFilter).change(function (e) { 
-		e.preventDefault();
-		var catName = $(this).find(':selected').data('label').toLowerCase();
-		var gotoPage;
-		if (catName === 'themes') {
-			gotoPage = '/all-stories/';
-		} else {
-			gotoPage = '/category/' + catName + '/';
+// Dynamic referrer link for our-people CPT category link 
+const navLabel = document.querySelector('.elementor-element-51e9d24 a');
+if (navLabel) {
+	navLabel.style.opacity = '0';
+}
+jQuery(document).ready(function($) {
+	const linkTarget = $('.elementor-element-51e9d24 a');
+	const linkLabel = $(linkTarget).find('.elementor-button-text');
+	let referrer = "";
+	let referrerTitle = "";
+	if (localStorage.getItem("referrer") && localStorage.getItem("referrerTitle")) {
+		referrer = localStorage.getItem("referrer");
+		referrerTitle = localStorage.getItem("referrerTitle");
+		if (referrerTitle == 'Board of Directors') {
+			$(linkTarget).attr("href", referrer);
+			$(linkLabel).text(referrerTitle);
 		}
-		window.location.href = gotoPage;
-	});
-
-
-
+	}
+	localStorage.setItem("referrer", window.location.href);
+	refTitle = document.head.querySelector("[property='og:title'][content]").content;
+	localStorage.setItem("referrerTitle", refTitle);
+	if (navLabel) {	
+		navLabel.style.opacity = '1';
+	}
 });

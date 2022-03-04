@@ -20,6 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 
 <?php
+	if (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) {
+		/* Do Not Track is enabled */
+	}
+?>
+
+<?php
 $is_elementor_theme_exist = function_exists( 'elementor_theme_do_location' );
 
 if ( ! cb_child_process_location( 'header' ) && ( ! $is_elementor_theme_exist || ! elementor_theme_do_location( 'header' ) ) ) {

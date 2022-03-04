@@ -205,3 +205,7 @@ function shapeSpace_filter_search($query) {
 	return $query;
 }
 add_filter('pre_get_posts', 'shapeSpace_filter_search');
+
+
+
+//add_theme_support( 'post-thumbnails' );
