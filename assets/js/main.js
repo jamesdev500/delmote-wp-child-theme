@@ -530,5 +530,28 @@ jQuery(document).ready(function($) {
 	});
 	
 
+	// Category page dropdown filter fix
+	var catDropDownFilter = $('.jet-smart-filters-select .jet-select__control[name="category"]');
+
+	// $(catDropDownFilter).find('option').click(function (e) { 
+	// 	e.preventDefault();
+	// });
+
+	$(catDropDownFilter).find('option').unbind();
+	$(catDropDownFilter).unbind();
+
+	$(catDropDownFilter).change(function (e) { 
+		e.preventDefault();
+		var catName = $(this).find(':selected').data('label').toLowerCase();
+		var gotoPage;
+		if (catName === 'themes') {
+			gotoPage = '/all-stories/';
+		} else {
+			gotoPage = '/category/' + catName + '/';
+		}
+		window.location.href = gotoPage;
+	});
+
+
 
 });
