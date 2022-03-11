@@ -541,7 +541,6 @@ jQuery(document).ready(function($) {
 
 });
 
-
 // Dynamic referrer link for our-people CPT category link 
 const navLabel = document.querySelector('.elementor-element-51e9d24 a');
 if (navLabel) {
@@ -566,4 +565,45 @@ jQuery(document).ready(function($) {
 	if (navLabel) {	
 		navLabel.style.opacity = '1';
 	}
+});
+
+// Mobile view locations dropdown sync with map Pin and slick slider
+jQuery(document).ready(function($) {
+
+	const observer = new MutationObserver(function(mutations_list) {
+		mutations_list.forEach(function(mutation) {
+			mutation.addedNodes.forEach(function(added_node) {
+				if(added_node.id == 'elementor-popup-modal-1407') {
+					const locationsPopUp = $('.elementor-location-popup');
+					const locationsDropDown = $(locationsPopUp).find('#mapsMobile');
+					const sliderArrow = $(locationsPopUp).find('.slick-arrow');
+					let currentLocId;
+					function syncDropdownValue() {
+						setTimeout(() => {
+							currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
+							$(locationsDropDown)
+								.find(`option[value='${currentLocId}']`).attr('selected','selected')
+								.siblings().attr('selected',false);
+						}, 1300);
+					}
+
+					syncDropdownValue();
+
+					$(sliderArrow).click(function (e) { 
+						e.preventDefault();
+						currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
+						$(locationsDropDown)
+							.find(`option[value='${currentLocId}']`).attr('selected','selected')
+							.siblings().attr('selected',false);
+					});
+
+					observer.disconnect();
+				}
+			});
+		});
+	});
+
+	observer.observe(document.querySelector('body.home'), { subtree: false, childList: true });
+	
+
 });
