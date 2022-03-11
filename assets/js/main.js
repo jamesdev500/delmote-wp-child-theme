@@ -567,36 +567,44 @@ jQuery(document).ready(function($) {
 	}
 });
 
+
 // Mobile view locations dropdown sync with map Pin and slick slider
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
-	const observer = new MutationObserver(function(mutations_list) {
-		mutations_list.forEach(function(mutation) {
-			mutation.addedNodes.forEach(function(added_node) {
-				if(added_node.id == 'elementor-popup-modal-1407') {
-					const locationsPopUp = $('.elementor-location-popup');
-					const locationsDropDown = $(locationsPopUp).find('#mapsMobile');
-					const sliderArrow = $(locationsPopUp).find('.slick-arrow');
-					let currentLocId;
-					function syncDropdownValue() {
-						setTimeout(() => {
-							currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
-							$(locationsDropDown)
-								.find(`option[value='${currentLocId}']`).attr('selected','selected')
-								.siblings().attr('selected',false);
-						}, 1300);
-					}
+	function sliderModifier() {
+		const locationsPopUp = $('.elementor-location-popup');
+		const locationsDropDown = $(locationsPopUp).find('#mapsMobile');
+		const sliderArrow = $(locationsPopUp).find('.slick-arrow');
+		let currentLocId;
+		function syncDropdownValue() {
+			setTimeout(() => {
+				currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
+				$(locationsDropDown)
+					.find(`option[value='${currentLocId}']`).attr('selected', 'selected')
+					.siblings().attr('selected', false);
+			}, 1300);
+		}
+	
+		syncDropdownValue();
+	
+		$(sliderArrow).click(function (e) {
+			e.preventDefault();
+			currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
+			$(locationsDropDown)
+				.find(`option[value='${currentLocId}']`).attr('selected', 'selected')
+				.siblings().attr('selected', false);
+		});
+	
+	}
 
-					syncDropdownValue();
+	const observer = new MutationObserver(function (mutations_list) {
+		mutations_list.forEach(function (mutation) {
+			mutation.addedNodes.forEach(function (added_node) {
+				if (added_node.id == 'elementor-popup-modal-1407') {
 
-					$(sliderArrow).click(function (e) { 
-						e.preventDefault();
-						currentLocId = $('.jet-listing-grid--1390 .slick-active').data('post-id');
-						$(locationsDropDown)
-							.find(`option[value='${currentLocId}']`).attr('selected','selected')
-							.siblings().attr('selected',false);
-					});
-
+					sliderModifier();
+					initInnerObserver();
+					
 					observer.disconnect();
 				}
 			});
@@ -604,6 +612,22 @@ jQuery(document).ready(function($) {
 	});
 
 	observer.observe(document.querySelector('body.home'), { subtree: false, childList: true });
-	
+
+	function initInnerObserver() {
+		let innerContent = $('#elementor-popup-modal-1407 .dialog-lightbox-message')
+		if (innerContent.length) {
+			const observer2 = new MutationObserver(function(mutations_list) {
+				mutations_list.forEach(function(mutation) {
+					mutation.addedNodes.forEach(function(added_node) {
+						if(added_node.classList.contains('elementor-location-popup')) {
+							sliderModifier();
+							console.log('child .elementor-location-popup had been added');
+						}
+					});
+				});
+			});
+			observer2.observe(document.querySelector("#elementor-popup-modal-1407 .dialog-lightbox-message"), { subtree: false, childList: true });
+		}
+	}
 
 });
