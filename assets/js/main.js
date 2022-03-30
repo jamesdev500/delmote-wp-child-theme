@@ -152,15 +152,26 @@ jQuery(document).ready(function($) {
 	}, 1000);
 
 	//Timeline Section
-	var timelineSlider = $('#historySlider .slick-slider');
-	$(document).ready(function($){
-		$('.fdm-centuries').change(function(){
-			var postId = $(this).val();
-			var slideIndex = timelineSlider.find('[data-post-id="' + postId + '"]').data('slick-index');
-			timelineSlider.slick('slickGoTo', slideIndex);    
-		});  
-		
-	});
+	setTimeout(function() {
+
+		var sliderTime = $('.timeline').find('.slick-slider');
+
+		$('.century .elementor-widget-button').click(function(e) {
+			e.preventDefault();
+			var pLink = $(this).data('slide');
+			var pIndex = sliderTime.find('[data-post-id="' + pLink + '"]').data('slick-index');
+			sliderTime.slick('slickPause').slick('slickGoTo', pIndex);
+		});
+
+		$('#century').change(function() {
+			var pLink = $(this).val();
+			var pIndex = sliderTime.find('[data-post-id="' + pLink + '"]').data('slick-index');
+			sliderTime.slick('slickPause').slick('slickGoTo', pIndex);
+		});
+
+	}, 1000);
+
+
 
     /// Products sliders
 
