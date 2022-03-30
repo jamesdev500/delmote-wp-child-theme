@@ -582,7 +582,7 @@ jQuery(document).ready(function ($) {
 				$(locationsDropDown)
 					.find(`option[value='${currentLocId}']`).attr('selected', 'selected')
 					.siblings().attr('selected', false);
-			}, 1300);
+			}, 800);
 		}
 	
 		syncDropdownValue();
@@ -611,7 +611,7 @@ jQuery(document).ready(function ($) {
 		});
 	});
 
-	observer.observe(document.querySelector('body.home'), { subtree: false, childList: true });
+	observer.observe(document.querySelector('body'), { subtree: false, childList: true });
 
 	function initInnerObserver() {
 		let innerContent = $('#elementor-popup-modal-1407 .dialog-lightbox-message')
