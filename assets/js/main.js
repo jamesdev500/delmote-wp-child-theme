@@ -151,25 +151,21 @@ jQuery(document).ready(function($) {
 		}
 	}, 1000);
 
-	//Timeline Section
-	setTimeout(function() {
-
-		var sliderTime = $('.timeline').find('.slick-slider');
-
-		$('.century .elementor-widget-button').click(function(e) {
-			e.preventDefault();
-			var pLink = $(this).data('slide');
-			var pIndex = sliderTime.find('[data-post-id="' + pLink + '"]').data('slick-index');
-			sliderTime.slick('slickPause').slick('slickGoTo', pIndex);
+	//Timeline Section: targets 'HTML code' widget on page /who-we-are
+	function timelineSliderMobileNav() {
+		const timelineSlider = $('#historySlider .slick-slider');
+		$('.fdm-centuries').change(function () {
+			var postId = $(this).val();
+			console.log('postId: ' + postId);
+			var slideIndex = timelineSlider.find('[data-post-id="' + postId + '"]').data('slick-index');
+			console.log('slickGoTo: ' + slideIndex);
+			timelineSlider.slick('slickGoTo', slideIndex);
 		});
+	}
 
-		$('#century').change(function() {
-			var pLink = $(this).val();
-			var pIndex = sliderTime.find('[data-post-id="' + pLink + '"]').data('slick-index');
-			sliderTime.slick('slickPause').slick('slickGoTo', pIndex);
-		});
-
-	}, 1000);
+	waitForElm('#historySlider .slick-slider').then((elm) => {
+		timelineSliderMobileNav();
+	});
 
 
 
@@ -631,3 +627,23 @@ jQuery(document).ready(function ($) {
 	}
 
 });
+
+function waitForElm(selector) {
+	return new Promise(resolve => {
+		if (document.querySelector(selector)) {
+			return resolve(document.querySelector(selector));
+		}
+
+		const observer = new MutationObserver(mutations => {
+			if (document.querySelector(selector)) {
+				resolve(document.querySelector(selector));
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+	});
+}
